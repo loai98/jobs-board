@@ -1,26 +1,24 @@
 class JobsController < ApplicationController
   def index
      @jobs =  Job.all
-
-    #  render json: @jobs, include: [:jobs]
-       render json: @jobs, status: 200
-    
-      #  @jobs = jobs.find(params[:id])
+      render json: @jobs, status: 200
       # render :template => "weblog/show"
-
   end
 
   def create
     job= Job.new()
     job.name = params[:name]
     job.description = params[:description]
-    job.applications = ['5','5']
     job.save
-    # render json: jobs, status: 200
+  end 
 
-     redirect_to '/jobs/', :notice => "Job has been Added"
-
-     #render json: params[:job_post]
+  def edit
+    job= Job.find(params[:id])? Job.find(params[:id]):false
+    if job
+      job.name = params[:name]? params[:name]:job.name
+      job.description = params[:description]? params[:description]:job.description
+      job.save
+    end
   end 
 
   def new
@@ -29,7 +27,7 @@ class JobsController < ApplicationController
   def destroy
     job = Job.find(params[:id])
     job.delete
-    redirect_to '/jobs', :notice => "Job has been deleted"
+    # redirect_to '/jobs', :notice => "Job has been deleted"
   end
 
   def show
@@ -39,8 +37,37 @@ class JobsController < ApplicationController
 
 
   def apply
+     application= Application.new()
+     application.user_id = current_user.id
+     application.job_id = params[:id]
+     application.save
   end
 
+  def applications
+    applications = Application.all
+    render json: applications
+
+    #  @TODO 
+    #  Try to retrieve user and job data related to applications
+    # render json: Job.joins(:applications_)
+    # render json:  Job.joins(:applications_).select('applications_.id')
+    #  render json: Job.joins(:users)
+    # render json: Job.joins(:applications_).select("applications_.ids")
+    # render Application.joins(:jobs)
+    # render Application.joins(:users).where(user_id: :users:id )
+  end
+
+  def jobApplication
+    render json: Application.where(job_id: params[:id])
+  end
+
+  def application
+    application = Application.find(params[:id])
+    application.status =true
+    application.save
+    render json: application
+  end
+  
 
 end
 

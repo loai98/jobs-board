@@ -18,6 +18,12 @@ class Users::SessionsController < Devise::SessionsController
     super
   end
 
+
+  def applications
+    # Book.where(category: "Ruby")
+    render json: Application.where(user_id: params[:id])
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.

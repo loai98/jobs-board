@@ -3,61 +3,58 @@
 
 <span>Result : (<%=@jobs.size%>)</span>
 
-<% if current_user.admin == 1 %>
-<h2><a href="jobs/new">Add new job</a></h2>
-<% end %>
+<% if current_user.admin==1 %>
+    <h2><a href="jobs/new">Add new job</a></h2>
+    <% end %>
 
 
-<table class="content-table">
+        <table class="content-table">
 
 
-    <thead>
-        <tr>
-            <td>Job Title</td>
-            <td>Job Description</td>
-            <td>Action</td>
+            <thead>
+                <tr>
+                    <td>Job Title</td>
+                    <td>Job Description</td>
+                    <td>Action</td>
 
-        </tr>
-    </thead>
+                </tr>
+            </thead>
 
-    <% @jobs.each do |element| %>
-        <tr>
-            <td> <a href="/jobs/<%=element['id']%>">
-                    <h1>
-                        <%= element["name"] %>
-                    </h1>
-                </a></td>
-            <td>
-                <p>
-                    <%= element["description"] %>
-                </p>
+            <% @jobs.each do |element| %>
+                <tr>
+                    <td> <a href="/jobs/<%=element['id']%>">
+                            <h1>
+                                <%= element["name"] %>
+                            </h1>
+                        </a></td>
+                    <td>
+                        <p>
+                            <%= element["description"] %>
+                        </p>
 
-            </td>
-            <td>
+                    </td>
+                    <td>
 
-                <div class="action-btn">
+                        <div class="action-btn">
 
-                    <a class="btn-primary" href="jobs/<%=element['id']%>/apply">Apply</a>
-<%
-=begin%>
-  Hide Delte button for normal users
-<%
-=end%>
-                    <% if current_user.admin == 1 %>
-                        <form accept-charset="UTF-8" action="/jobs/<%=element['id']%>/destroy" method="post">
-                            <input name="_method" type="hidden" value="delete" />
-                            <input name="utf8" type="hidden" value="&#x2713;" />
-                            <input name="authenticity_token" type="hidden"
-                                value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
-                            <input type="submit" value="Delete" />
-                        </form>
-                    <% end %>
+                            <a class="btn-primary" href="jobs/<%=element['id']%>/apply">Apply</a>
+                            <%=begin%>
+                                Hide Delte button for normal users
+                                <%=end%>
+                                    <% if current_user.admin==1 %>
+                                        <form accept-charset="UTF-8" action="/jobs/<%=element['id']%>/destroy"
+                                            method="post">
+                                            <input name="_method" type="hidden" value="delete" />
+                                            <input name="utf8" type="hidden" value="&#x2713;" />
+                                            <input name="authenticity_token" type="hidden"
+                                                value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
+                                            <input type="submit" value="Delete" />
+                                        </form>
+                                        <% end %>
 
-            </td>
-            </div>
+                    </td>
+                    </div>
+                </tr>
+                <% end %>
 
-        </tr>
-
-        <% end %>
-
-</table>
+        </table>

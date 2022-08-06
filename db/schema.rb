@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_04_231055) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_05_191122) do
   create_table "applications", force: :cascade do |t|
     t.string "user_id"
     t.string "job_id"
+    t.boolean "status", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "applications_", force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "user_id"
     t.boolean "status", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,6 +32,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_231055) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "jobsAbblications", force: :cascade do |t|
+    t.integer "job_id"
+    t.boolean "status", default: false
+    t.index "\"user_id\"", name: "index_jobsAbblications_on_user_id"
   end
 
   create_table "jobs_users", id: false, force: :cascade do |t|
