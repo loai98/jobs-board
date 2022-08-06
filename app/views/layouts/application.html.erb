@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+
+
+    <% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  
+  <form action="users/log_out">
+<input type="hidden" value="delete" name="_method">
+  <button type="submit" value="log_out">Log out</button>
+  </form>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+   <% end %>
+
+  <% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<p class="navbar-text float-right">
+
+
+      <%= yield %>
+
+  </body>
+</html>
